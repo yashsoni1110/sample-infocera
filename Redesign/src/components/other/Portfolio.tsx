@@ -1,6 +1,5 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef } from "react";
 import { ArrowUpRight, Github, ExternalLink } from "lucide-react";
-import { cn } from "../../lib/utils";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -47,63 +46,47 @@ interface Project {
 }
 
 const Portfolio = () => {
-    const sectionRef = useRef<HTMLDivElement>(null);
     const triggerRef = useRef(null);
-    const [isMobile, setIsMobile] = useState(false);
-
-    // Detect screen size to toggle animation
-    useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 1024);
-        checkMobile();
-        window.addEventListener("resize", checkMobile);
-        return () => window.removeEventListener("resize", checkMobile);
-    }, []);
+    const projectsRef = useRef<HTMLDivElement>(null);
 
     useGSAP(() => {
-        if (!isMobile) {
-            const pin = gsap.fromTo(sectionRef.current, 
-                { translateX: 0 }, 
-                { 
-                    translateX: "-72%", 
+        const mm = gsap.matchMedia();
+
+        mm.add("(min-width: 1024px)", () => {
+            const pin = gsap.fromTo(projectsRef.current,
+                { translateX: 0 },
+                {
+                    translateX: "-72%",
                     ease: "none",
                     duration: 1,
                     scrollTrigger: {
                         trigger: triggerRef.current,
                         start: "top top",
-                        end: "+=2000",
+                        end: "+=2500",
                         scrub: 1,
                         pin: true,
                         anticipatePin: 1,
                     }
-                 }
+                }
             );
             return () => {
                 pin.kill();
-            }
-        }
-    }, [isMobile]);
+            };
+        });
+        
+        return () => mm.revert(); // Cleanup matching media
+    }, []);
 
     return (
         <section
             ref={triggerRef}
-            className={cn(
-                "relative bg-background text-foreground overflow-hidden z-40",
-                // Only make the section tall if NOT on mobile
-                !isMobile ? "h-screen" : "h-auto py-20"
-            )}
+            className="relative bg-background text-foreground overflow-hidden z-40 lg:h-screen h-auto py-20 lg:py-0"
         >
             {/* Sticky wrapper */}
-            <div className={cn(
-                "w-full h-full",
-                // Split pane on desktop (flex), stacked on mobile
-                !isMobile ? "flex" : "block px-6"
-            )}>
+            <div className="w-full h-full flex flex-col lg:flex-row">
 
                 {/* --- LEFT PANEL (Static) --- */}
-                <div className={cn(
-                    "flex flex-col justify-center z-30 shrink-0",
-                    !isMobile ? "w-[35%] h-full pl-12 pr-6 bg-background relative z-10" : "w-full mb-12"
-                )}>
+                <div className="flex flex-col justify-center z-30 shrink-0 w-full lg:w-[35%] lg:h-full px-6 lg:pl-12 lg:pr-6 bg-background relative z-10 mb-12 lg:mb-0">
                     <div className="flex items-center gap-3 text-primary mb-4">
                         <div className="h-[1px] w-12 bg-primary" />
                         <span className="text-xs font-mono tracking-widest uppercase">Portfolio</span>
@@ -112,43 +95,32 @@ const Portfolio = () => {
                         Selected <br /> <span className="text-transparent bg-clip-text bg-gradient-to-b from-foreground to-foreground/40">Works.</span>
                     </h2>
 
-                    {/* Progress Bar (Desktop only, moved to left panel) */}
-                    {!isMobile && (
-                        <div className="flex items-center gap-4 mt-8 w-full max-w-xs">
-                            <span className="text-xs font-mono text-muted-foreground">01</span>
-                            <div className="flex-1 h-[2px] bg-border/20 rounded-full overflow-hidden">
-                                {/* Optional: Implement scroll progress here if needed via GSAP */}
-                                <div className="h-full bg-primary origin-left w-1/4" />
-                            </div>
-                            <span className="text-xs font-mono text-muted-foreground">0{PROJECTS.length}</span>
+                    {/* Progress Bar (Desktop only) */}
+                    <div className="hidden lg:flex items-center gap-4 mt-8 w-full max-w-xs">
+                        <span className="text-xs font-mono text-muted-foreground">01</span>
+                        <div className="flex-1 h-[2px] bg-border/20 rounded-full overflow-hidden">
+                            <div className="h-full bg-primary origin-left w-1/4" />
                         </div>
-                    )}
+                        <span className="text-xs font-mono text-muted-foreground">0{PROJECTS.length}</span>
+                    </div>
                 </div>
 
                 {/* --- RIGHT PANEL (Scrollable) --- */}
-                <div ref={sectionRef} className={cn(
-                    !isMobile ? "h-full flex items-center pl-8" : "w-full"
-                )}>
+                <div className="lg:h-full flex items-center lg:pl-8 w-full overflow-hidden lg:overflow-visible">
                     <div
-                        className={cn(
-                            "flex gap-8",
-                            !isMobile ? "w-[120vw]" : "flex-col w-full"
-                        )}
+                        ref={projectsRef}
+                        className="flex flex-col lg:flex-row gap-8 lg:w-[120vw] w-full px-6 lg:px-0"
                     >
                         {PROJECTS.map((project, index) => (
                             <ProjectCard
                                 key={index}
                                 project={project}
                                 index={index}
-                                isMobile={isMobile}
                             />
                         ))}
 
                         {/* Final CTA Card */}
-                        <div className={cn(
-                            "relative shrink-0 flex flex-col justify-center rounded-[2.5rem] bg-primary/5 border border-primary/10 p-10 backdrop-blur-sm",
-                            !isMobile ? "w-[30vw] h-[60vh]" : "w-full h-64"
-                        )}>
+                        <div className="relative shrink-0 flex flex-col justify-center rounded-[2.5rem] bg-primary/5 border border-primary/10 p-10 backdrop-blur-sm w-full h-64 lg:w-[30vw] lg:h-[60vh]">
                             <h3 className="text-3xl md:text-4xl font-bold mb-6">Ready to build the <span className="text-primary italic">Next</span> thing?</h3>
                             <button className="w-fit px-6 py-3 bg-foreground text-background rounded-full font-bold flex items-center gap-3 hover:scale-105 transition-transform text-sm md:text-base">
                                 Start a Project <ExternalLink className="w-4 h-4 md:w-5 md:h-5" />
@@ -165,15 +137,11 @@ const Portfolio = () => {
 interface ProjectCardProps {
     project: Project;
     index: number;
-    isMobile: boolean;
 }
 
-const ProjectCard = ({ project, index, isMobile }: ProjectCardProps) => {
+const ProjectCard = ({ project, index }: ProjectCardProps) => {
     return (
-        <div className={cn(
-            "relative shrink-0 group",
-            !isMobile ? "w-[45vw] h-[60vh]" : "w-full h-[500px]"
-        )}>
+        <div className="relative shrink-0 group w-full h-[500px] lg:w-[45vw] lg:h-[60vh]">
             {/* Index Background Label */}
             <div className="absolute -top-10 -left-6 text-[8rem] md:text-[10rem] font-bold text-foreground/10 pointer-events-none italic select-none z-0">
                 0{index + 1}
