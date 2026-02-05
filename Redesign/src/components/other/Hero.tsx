@@ -45,7 +45,7 @@ const Hero = () => {
     }, []);
 
     return (
-        <section ref={containerRef} className="relative min-h-screen w-full bg-background overflow-hidden flex flex-col items-center justify-center pt-32 pb-20">
+        <section ref={containerRef} className="relative min-h-screen w-full bg-background overflow-hidden flex flex-col items-center justify-center pt-30 pb-20">
             
             {/* --- ATMOSPHERE --- */}
             <div className="absolute inset-0 pointer-events-none">
@@ -65,7 +65,7 @@ const Hero = () => {
             <div className="container relative z-10 flex flex-col items-center text-center max-w-5xl px-4">
                 
                 {/* 1. Badge */}
-                <div className="mb-8 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-xs font-mono tracking-[0.2em] text-primary/80 uppercase animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300 fill-mode-backwards">
+                <div className="mb-1 inline-flex items-center gap-2 px-4 py-0 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-xs font-mono tracking-[0.2em] text-primary/80 uppercase animate-in fade-in slide-in-from-bottom-1 duration-1000 delay-300 fill-mode-backwards">
                     <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                     System Reboot V.2.0
                 </div>
@@ -96,7 +96,7 @@ const Hero = () => {
                 </div>
 
                  {/* 4. Portal Graphic Centerpiece */}
-                <div className="relative mt-20 w-full max-w-4xl aspect-[16/9] perspective-1000 group">
+                <div className="relative mt-10 w-full max-w-4xl aspect-[16/9] perspective-1000 group">
                     <div ref={portalRef} className="relative w-full h-full">
                          {/* Transforming inner container for 3D effect */}
                         <div className="absolute inset-0 rounded-2xl border border-border/40 bg-card/80 backdrop-blur-xl overflow-hidden shadow-2xl shadow-primary/20 transform rotate-x-12 group-hover:rotate-x-0 transition-transform duration-1000 ease-out">
