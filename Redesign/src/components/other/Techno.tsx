@@ -17,7 +17,7 @@ import {
 } from "../ui/sheet";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { cn } from "../../lib/utils";
+import { cn, getTechIconUrl } from "../../lib/utils";
 
 const ALL_TECH = [
   { category: "Web Server", name: "Apache", icon: Feather, color: "text-orange-500", bg: "bg-orange-500/10" },
@@ -117,7 +117,12 @@ const Techno = () => {
                                     {items.map((tech) => (
                                         <div key={tech.name} className="flex items-center gap-3 p-2 rounded-lg hover:bg-secondary/20 transition-colors group">
                                             <div className={cn("p-2 rounded-md transition-colors", tech.bg, tech.color)}>
-                                                <tech.icon className="w-4 h-4" />
+                                                {/* Use Icon URL in Sheet too */}
+                                                <img 
+                                                    src={getTechIconUrl(tech.name)} 
+                                                    alt={tech.name} 
+                                                    className="w-4 h-4 opacity-70 invert dark:invert-0" 
+                                                />
                                             </div>
                                             <span className="text-sm font-medium text-foreground/80 group-hover:text-foreground transition-colors">{tech.name}</span>
                                         </div>
@@ -138,7 +143,11 @@ const Techno = () => {
             <div ref={row1Ref} className="flex gap-4 whitespace-nowrap px-4">
                 {SCROLL_ITEMS.map((tech, index) => (
                     <div key={`r1-${index}`} className="flex items-center gap-3 px-6 py-3 rounded-full bg-secondary/10 border border-border/10 backdrop-blur-sm grayscale hover:grayscale-0 transition-all duration-300 hover:bg-secondary/20 hover:border-border/30 hover:scale-105 cursor-default">
-                        <tech.icon className={cn("w-5 h-5", tech.color)} />
+                        <img 
+                            src={getTechIconUrl(tech.name)} 
+                            alt={tech.name} 
+                            className="w-5 h-5 opacity-70 invert dark:invert-0" 
+                        />
                         <span className="text-sm font-bold text-foreground/80">{tech.name}</span>
                     </div>
                 ))}
@@ -152,7 +161,11 @@ const Techno = () => {
              <div ref={row2Ref} className="flex gap-4 whitespace-nowrap px-4">
                 {REVERSE_ITEMS.map((tech, index) => (
                     <div key={`r2-${index}`} className="flex items-center gap-3 px-6 py-3 rounded-full bg-secondary/10 border border-border/10 backdrop-blur-sm grayscale hover:grayscale-0 transition-all duration-300 hover:bg-secondary/20 hover:border-border/30 hover:scale-105 cursor-default">
-                        <tech.icon className={cn("w-5 h-5", tech.color)} />
+                        <img 
+                            src={getTechIconUrl(tech.name)} 
+                            alt={tech.name} 
+                            className="w-5 h-5 opacity-70 invert dark:invert-0" 
+                        />
                         <span className="text-sm font-bold text-foreground/80">{tech.name}</span>
                     </div>
                 ))}

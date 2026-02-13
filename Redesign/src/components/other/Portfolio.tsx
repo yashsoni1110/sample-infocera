@@ -3,7 +3,7 @@ import { ArrowUpRight, Github, ExternalLink } from "lucide-react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { cn } from "../../lib/utils";
+import { cn, getTechIconUrl } from "../../lib/utils";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -133,7 +133,13 @@ const Card = ({ project, index, targetScale }: { project: any, index: number, ta
                             <p className="text-muted-foreground text-lg leading-relaxed mb-8">{desc}</p>
                             <div className="flex flex-wrap gap-2">
                                 {tech.map((t: string) => (
-                                    <span key={t} className="px-3 py-1 rounded-full bg-white/5 text-xs font-mono text-muted-foreground border border-white/10">
+                                    <span key={t} className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 text-xs font-medium text-muted-foreground border border-white/10 transition-colors hover:bg-white/10 hover:text-primary">
+                                        <img 
+                                            src={getTechIconUrl(t)} 
+                                            alt={t} 
+                                            className="w-3.5 h-3.5 opacity-70 invert dark:invert-0" 
+                                            loading="lazy"
+                                        />
                                         {t}
                                     </span>
                                 ))}

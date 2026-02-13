@@ -72,8 +72,18 @@ const Contact = () => {
                         {/* Social Proof Mini-Card */}
                         <div className="mt-4 lg:mt-auto p-6 rounded-2xl bg-secondary/5 border border-border/50">
                             <div className="flex -space-x-3 mb-4">
-                                {[1, 2, 3, 4].map((i) => (
-                                    <div key={i} className="w-8 h-8 rounded-full border-2 border-background bg-secondary" />
+                                {[
+                                    "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop&q=80",
+                                    "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop&q=80",
+                                    "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop&q=80",
+                                    "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&q=80"
+                                ].map((src, i) => (
+                                    <img 
+                                        key={i} 
+                                        src={src} 
+                                        alt="Member"
+                                        className="w-10 h-10 rounded-full border-2 border-background object-cover" 
+                                    />
                                 ))}
                             </div>
                             <p className="text-sm text-muted-foreground">

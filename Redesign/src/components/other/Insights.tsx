@@ -3,6 +3,7 @@ import { ArrowUpRight, Clock, Hash, Calendar } from "lucide-react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { getTechIconUrl } from "../../lib/utils";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -140,7 +141,13 @@ const Insights = () => {
                                     </p>
                                     <div className="pt-2 flex gap-2">
                                         {item.tags.map(tag => (
-                                            <span key={tag} className="text-[10px] text-muted-foreground bg-secondary px-2 py-0.5 rounded">
+                                            <span key={tag} className="flex items-center gap-1.5 text-[10px] text-muted-foreground bg-secondary px-2 py-0.5 rounded">
+                                                 <img 
+                                                    src={getTechIconUrl(tag)} 
+                                                    alt={tag} 
+                                                    className="w-3 h-3 opacity-50 invert dark:invert-0" 
+                                                    loading="lazy"
+                                                />
                                                 #{tag}
                                             </span>
                                         ))}
