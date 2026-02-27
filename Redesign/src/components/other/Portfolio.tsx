@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { ArrowUpRight, Github, ExternalLink } from "lucide-react";
+import { ArrowUpRight, Diamond } from "lucide-react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -9,77 +9,55 @@ gsap.registerPlugin(ScrollTrigger);
 
 const PROJECTS = [
     {
-        title: "E-comm Ecosystem",
-        category: "Web Architecture",
-        desc: "Headless commerce handling 50k+ daily transactions.",
+        title: "E-comm Evolution",
+        client: "Vogue Retail",
+        desc: "Headless commerce architecture unblocking 50k+ daily concurrent checkouts with zero friction.",
         tech: ["Next.js", "Redis", "Stripe"],
-        image: "https://images.unsplash.com/photo-1661956602116-aa6865609028?auto=format&fit=crop&w=1600&q=80", 
-        color: "bg-[#0A0A0A]" 
+        image: "https://images.unsplash.com/photo-1661956602116-aa6865609028?auto=format&fit=crop&w=1600&q=80"
     },
     {
-        title: "MediCare AI",
-        category: "Mobile Health",
-        desc: "HIPAA-compliant telemedicine with on-device AI analysis.",
+        title: "TeleHealth AI",
+        client: "MediCare Plus",
+        desc: "HIPAA-certified telemedicine ecosystem featuring on-device real-time AI vitals analysis.",
         tech: ["React Native", "TensorFlow", "Node.js"],
-        image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1600&q=80",
-        color: "bg-[#0F0F0F]"
+        image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1600&q=80"
     },
     {
-        title: "FinTech Dashboard",
-        category: "Data Analytics",
-        desc: "Predictive analytics for high-frequency trading firms.",
-        tech: ["Python", "ClickHouse", "D3.js"],
-        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80",
-        color: "bg-[#141414]"
-    },
-    {
-        title: "Smart Logistics",
-        category: "IoT / Systems",
-        desc: "Real-time fleet optimization with 500+ IoT nodes.",
-        tech: ["Go", "MQTT", "PostgreSQL"],
-        image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1600&q=80",
-        color: "bg-[#1A1A1A]"
+        title: "Quantum Ledger",
+        client: "FinTech Global",
+        desc: "Predictive algorithmic analytics dashboard built for high-frequency trading dominance.",
+        tech: ["Python", "D3.js", "ClickHouse"],
+        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80"
     }
 ];
 
 const Portfolio = () => {
     return (
-        <section className="relative bg-background py-32" id="portfolio">
-            <div className="container mx-auto px-6">
+        <section className="relative bg-background py-40 overflow-hidden" id="portfolio">
+            
+            {/* Monumental Atmosphere */}
+            <div className="absolute top-0 right-0 w-[80vw] h-[80vw] bg-primary/5 rounded-full blur-[150px] mix-blend-color-dodge -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+
+            <div className="container mx-auto px-6 max-w-7xl">
                 
-                {/* Header */}
-                <div className="text-center mb-24 max-w-3xl mx-auto">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-mono uppercase tracking-widest mb-6">
-                        <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                        Selected Works
+                {/* Minimal Elite Header */}
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-32 gap-10 border-b border-border/40 pb-12">
+                    <div className="max-w-3xl">
+                        <div className="flex items-center gap-3 text-xs font-mono font-bold tracking-[0.3em] uppercase text-primary mb-6">
+                            <Diamond className="w-3 h-3 fill-primary/30" />
+                            Elite Showcase
+                        </div>
+                        <h2 className="text-5xl md:text-7xl lg:text-[6rem] font-sans font-black tracking-tighter text-foreground leading-[1] drop-shadow-sm">
+                            Proof of <br/> <span className="text-gradient-gold drop-shadow-md">Concept.</span>
+                        </h2>
                     </div>
-                    <h2 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6">
-                        Building the <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">Future.</span>
-                    </h2>
-                    <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">
-                        A curated selection of projects where engineering meets design. 
-                        Solving complex problems with elegant solutions.
-                    </p>
                 </div>
 
-                {/* Stack Container */}
-                <div className="flex flex-col gap-32">
+                {/* Vertical Showcase */}
+                <div className="flex flex-col gap-32 lg:gap-40">
                     {PROJECTS.map((project, i) => (
-                        <Card key={i} project={project} index={i} targetScale={1 - (PROJECTS.length - i) * 0.05} />
+                        <Card key={i} project={project} index={i} />
                     ))}
-                </div>
-
-                {/* Final CTA within flow */}
-                <div className="mt-40 text-center">
-                   <div className="inline-block relative group cursor-pointer">
-                        <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                        <h3 className="text-4xl md:text-6xl font-black tracking-tight relative z-10">
-                            Have an idea?
-                        </h3>
-                        <a href="#contact" className="mt-8 inline-flex items-center gap-3 px-8 py-4 bg-foreground text-background rounded-full font-bold text-lg hover:bg-primary hover:text-white transition-all transform hover:scale-105 relative z-10">
-                            Start a Project <ExternalLink className="w-5 h-5" />
-                        </a>
-                   </div>
                 </div>
 
             </div>
@@ -87,85 +65,118 @@ const Portfolio = () => {
     );
 };
 
-const Card = ({ project, index, targetScale }: { project: any, index: number, targetScale: number }) => {
-    const containerRef = useRef(null);
-    const { title, category, desc, tech, image, color } = project;
+const Card = ({ project, index }: { project: any, index: number }) => {
+    const cardRef = useRef(null);
+    const { title, client, desc, tech, image } = project;
 
     useGSAP(() => {
-         gsap.to(containerRef.current, {
-            scale: targetScale,
-            scrollTrigger: {
-                trigger: containerRef.current,
-                start: "top top",
-                end: "bottom top",
-                scrub: true,
+         // Elite Parallax Reveal
+         gsap.fromTo(cardRef.current, 
+            { opacity: 0, y: 150, rotateX: 10, scale: 0.95 },
+            { 
+                opacity: 1, 
+                y: 0, 
+                rotateX: 0, 
+                scale: 1, 
+                duration: 1.5, 
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: cardRef.current,
+                    start: "top 85%",
+                }
             }
-         })
-    }, [targetScale])
+         );
+         
+         const imgContainer = (cardRef.current as any).querySelector('.img-parallax');
+         
+         gsap.fromTo(imgContainer,
+            { scale: 1.2, y: -50 },
+            {
+                scale: 1, y: 50,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: cardRef.current,
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true
+                }
+            }
+         )
 
-    const topOffset = 100 + (index * 25); 
+    }, []);
+
+    const isEven = index % 2 === 0;
 
     return (
         <div 
-            ref={containerRef}
-            className="sticky h-[600px] flex items-center justify-center perspective-1000"
-            style={{ top: `${topOffset}px` }}
+            ref={cardRef}
+            className="group relative w-full perspective-[2000px]"
         >
             <div className={cn(
-                "relative w-full max-w-5xl h-full rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl origin-top",
-                color
+                "relative grid lg:grid-cols-12 gap-10 lg:gap-16 items-center",
+                isEven ? "" : "lg:flex-row-reverse"
             )}>
-                <div className="absolute inset-0 bg-background/90 backdrop-blur-3xl z-0" />
                 
-                {/* Content Grid */}
-                <div className="relative z-10 grid lg:grid-cols-2 h-full">
-                    
-                    {/* Left: Text */}
-                    <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-between h-full order-2 lg:order-1">
-                        <div>
-                             <div className="flex items-center gap-3 mb-6">
-                                <span className="flex items-center justify-center w-10 h-10 rounded-full border border-white/10 bg-white/5 text-sm font-bold font-mono text-muted-foreground">
-                                    0{index + 1}
-                                </span>
-                                <span className="text-primary font-mono text-xs uppercase tracking-widest">{category}</span>
-                            </div>
-                            <h3 className="text-4xl md:text-5xl font-bold leading-tight mb-6">{title}</h3>
-                            <p className="text-muted-foreground text-lg leading-relaxed mb-8">{desc}</p>
-                            <div className="flex flex-wrap gap-2">
-                                {tech.map((t: string) => (
-                                    <span key={t} className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 text-xs font-medium text-muted-foreground border border-white/10 transition-colors hover:bg-white/10 hover:text-primary">
-                                        <img 
-                                            src={getTechIconUrl(t)} 
-                                            alt={t} 
-                                            className="w-3.5 h-3.5 opacity-70 invert dark:invert-0" 
-                                            loading="lazy"
-                                        />
-                                        {t}
-                                    </span>
-                                ))}
-                            </div>
+                {/* --- CONTENT BLOCK --- */}
+                <div className={cn(
+                    "lg:col-span-4 flex flex-col justify-center space-y-8 lg:space-y-12 z-20",
+                    isEven ? "order-2 lg:order-1" : "order-2 lg:order-2 lg:col-start-9"
+                )}>
+                    <div>
+                        <div className="flex items-center gap-4 mb-8">
+                            <span className="text-sm font-mono font-bold text-muted-foreground/60 tracking-widest leading-none">0{index + 1}</span>
+                            <span className="w-12 h-px bg-primary/40 leading-none" />
+                            <span className="text-xs font-mono font-bold text-primary tracking-[0.2em] leading-none uppercase">{client}</span>
                         </div>
-
-                        <div className="flex gap-4 pt-8">
-                             <button className="flex items-center gap-2 px-6 py-3 rounded-full bg-foreground text-background font-bold text-sm hover:bg-primary hover:text-white transition-colors">
-                                View Case <ArrowUpRight className="w-4 h-4" />
-                            </button>
-                             <button className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 hover:bg-white/10 transition-colors">
-                                <Github className="w-5 h-5 text-muted-foreground" />
-                            </button>
-                        </div>
+                        <h3 className="text-4xl md:text-5xl lg:text-5xl font-black leading-[1.1] tracking-tight mb-6">
+                            {title}
+                        </h3>
+                        <p className="text-muted-foreground/80 font-medium text-lg leading-relaxed max-w-md">
+                            {desc}
+                        </p>
                     </div>
 
-                    {/* Right: Image */}
-                    <div className="relative h-full min-h-[300px] lg:min-h-0 order-1 lg:order-2 overflow-hidden bg-black/20 group">
-                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10" />
+                    <div className="flex flex-col gap-6">
+                        <div className="flex flex-wrap gap-2">
+                            {tech.map((t: string) => (
+                                <span key={t} className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary/30 backdrop-blur-sm border border-border/50 text-[10px] uppercase tracking-widest font-mono text-muted-foreground transition-colors hover:text-primary hover:border-primary/50 cursor-pointer">
+                                    <img 
+                                        src={getTechIconUrl(t)} 
+                                        alt={t} 
+                                        className="w-3 h-3 opacity-60 invert dark:invert-0" 
+                                    />
+                                    {t}
+                                </span>
+                            ))}
+                        </div>
+                        
+                        <div className="pt-6 border-t border-border/40">
+                             <a href="#" className="inline-flex items-center gap-4 text-xs font-mono font-bold tracking-[0.2em] uppercase origin-left hover:text-primary transition-all duration-300 group/link">
+                                EXAMINE PROJECT
+                                <div className="w-10 h-10 rounded-full border border-border/80 flex items-center justify-center group-hover/link:bg-primary group-hover/link:border-primary group-hover/link:text-primary-foreground transition-colors shadow-sm">
+                                    <ArrowUpRight className="w-4 h-4" />
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                {/* --- VISUAL BLOCK --- */}
+                <div className={cn(
+                    "lg:col-span-8 relative aspect-[4/3] lg:aspect-[16/10] w-full rounded-[2rem] overflow-hidden bg-card border border-white/5",
+                    isEven ? "order-1 lg:order-2" : "order-1 lg:order-1 lg:col-start-1"
+                )}>
+                    {/* Shadow & Glow Behind img */}
+                    <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors duration-1000 blur-2xl z-0" />
+                    
+                    {/* Image Parallax Container */}
+                    <div className="absolute inset-[-10%] z-10 img-parallax opacity-90 group-hover:opacity-100 transition-opacity duration-1000">
                          <img 
                             src={image} 
                             alt={title}
-                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            className="w-full h-full object-cover filter saturate-[0.85] contrast-[1.1] group-hover:saturate-100 transition-all duration-1000"
                          />
                     </div>
-
                 </div>
             </div>
         </div>

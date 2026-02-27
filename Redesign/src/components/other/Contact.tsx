@@ -1,6 +1,5 @@
 import { useRef } from "react";
-import { Mail, MapPin, Phone, ArrowRight, Globe, type LucideIcon } from "lucide-react";
-import { cn } from "../../lib/utils";
+import { Mail, MapPin, Phone, ArrowRight, Diamond } from "lucide-react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -12,66 +11,78 @@ const Contact = () => {
 
     useGSAP(() => {
         gsap.fromTo(formRef.current, 
-            { opacity: 0, y: 30 },
-            { opacity: 1, y: 0, duration: 1, ease: "power2.out", scrollTrigger: { trigger: formRef.current, start: "top 80%" } }
+            { opacity: 0, y: 50, scale: 0.98 },
+            { opacity: 1, y: 0, scale: 1, duration: 1.5, ease: "power4.out", scrollTrigger: { trigger: formRef.current, start: "top 85%" } }
         );
     }, []);
 
     return (
-        <section className="relative py-12 lg:py-24 bg-background overflow-hidden">
-            {/* --- ABSTRACT BACKGROUND MAP --- */}
-            <div className="absolute inset-0 opacity-20 pointer-events-none">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--foreground)_1px,transparent_1px)] bg-[size:20px_20px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_70%)] opacity-20" />
-            </div>
+        <section className="relative py-32 lg:py-40 bg-background overflow-hidden border-t border-border/40" id="contact">
+            
+            {/* Ambient Base Light */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,var(--primary)/3%,transparent_60%)] pointer-events-none mix-blend-screen" />
 
-            <div className="container relative z-10 mx-auto px-4 sm:px-6">
+            <div className="container relative z-10 mx-auto px-6 max-w-7xl">
 
-                {/* --- HEADER --- */}
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12 lg:mb-20 border-b border-border/40 pb-8">
+                {/* Header */}
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-10 mb-20 lg:mb-32">
                     <div className="max-w-2xl">
-                        <span className="text-primary font-mono text-xs tracking-widest uppercase mb-2 block">
-                            // Contact Interface
-                        </span>
-                        <h2 className="text-4xl md:text-7xl font-bold text-foreground tracking-tighter leading-none">
-                            Let's start the <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-400 to-primary animate-gradient-x">conversation.</span>
+                        <div className="flex items-center gap-3 text-xs font-mono font-bold tracking-[0.3em] uppercase text-primary mb-6">
+                            <Diamond className="w-3 h-3 fill-primary/30" />
+                            Transmission Status
+                        </div>
+                        <h2 className="text-5xl md:text-[5rem] lg:text-[6rem] font-sans font-black tracking-tighter text-foreground leading-[1] text-balance drop-shadow-sm">
+                            Initiate <br/>
+                            <span className="text-transparent bg-clip-text bg-gradient-to-br from-[#cda24e] to-primary pb-2 drop-shadow-lg">Protocol.</span>
                         </h2>
                     </div>
-                    <div className="flex gap-3 text-xs font-mono">
-                        <StatusBadge label="Online" color="bg-green-500" />
-                        <StatusBadge label="Resp: ~2h" color="bg-blue-500" />
+                    
+                    {/* Status Beacon */}
+                    <div className="flex flex-col items-start gap-3 bg-secondary/30 backdrop-blur-md p-6 rounded-2xl border border-white/5 border-l-primary/50 shadow-sm relative overflow-hidden group">
+                        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                        <div className="flex items-center gap-4 text-xs font-mono uppercase tracking-[0.2em] font-bold text-foreground/80 relative z-10">
+                            <span className="relative flex h-3 w-3">
+                                <span className="animate-ping-slow absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></span>
+                            </span>
+                            Uplink Active
+                        </div>
+                        <div className="text-[10px] text-muted-foreground font-mono tracking-widest relative z-10 pl-7">
+                            Expected Latency: 2-3 hrs
+                        </div>
                     </div>
                 </div>
 
-                <div className="grid lg:grid-cols-12 gap-10 lg:gap-12">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20">
 
-                    {/* --- LEFT: CONTACT TILES --- */}
-                    <div className="lg:col-span-4 flex flex-col gap-4 order-2 lg:order-1">
+                    {/* --- LEFT: INFRASTRUCTURE PING --- */}
+                    <div className="lg:col-span-5 flex flex-col gap-6 order-2 lg:order-1">
                         <ContactTile
                             icon={Phone}
-                            label="Direct Line"
+                            label="DIRECT COMMS"
                             value="+91 88828 24948"
-                            subValue="Mon-Fri, 9am - 6pm"
+                            subValue="Mon-Fri, 0900 - 1800 IST"
                             href="tel:+918882824948"
                         />
                         <ContactTile
                             icon={Mail}
-                            label="Electronic Mail"
+                            label="DATA STREAM"
                             value="info@infocera.in"
-                            subValue="For project inquiries"
+                            subValue="Global Architecture Inquiries"
                             href="mailto:info@infocera.in"
                         />
                         <ContactTile
                             icon={MapPin}
-                            label="HQ Location"
+                            label="PHYSICAL NODE"
                             value="Connaught Place, Delhi"
-                            subValue="Block L, First Floor - 110001"
+                            subValue="Block L, Level 1 - 110001"
                             href="#"
                         />
 
-                        {/* Social Proof Mini-Card */}
-                        <div className="mt-4 lg:mt-auto p-6 rounded-2xl bg-secondary/5 border border-border/50">
-                            <div className="flex -space-x-3 mb-4">
+                        {/* Social Verification Block */}
+                        <div className="mt-8 lg:mt-auto p-8 rounded-3xl bg-background border border-border/40 shadow-xl shadow-black/5 flex flex-col items-start relative overflow-hidden group">
+                            <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                            <div className="flex -space-x-4 mb-6 relative z-10">
                                 {[
                                     "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop&q=80",
                                     "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop&q=80",
@@ -81,52 +92,53 @@ const Contact = () => {
                                     <img 
                                         key={i} 
                                         src={src} 
-                                        alt="Member"
-                                        className="w-10 h-10 rounded-full border-2 border-background object-cover" 
+                                        alt="Avatar"
+                                        className="w-12 h-12 rounded-full border-[3px] border-background object-cover shadow-sm group-hover:-translate-y-1 transition-transform"
+                                        style={{ transitionDelay: `${i * 50}ms` }}
                                     />
                                 ))}
                             </div>
-                            <p className="text-sm text-muted-foreground">
-                                Join <span className="text-foreground font-bold">500+ Enterprises</span> transforming their future with us.
+                            <p className="text-sm font-medium text-foreground/80 leading-relaxed max-w-[250px] relative z-10">
+                                Architecture backed by <strong className="font-bold text-foreground">500+ enterprises</strong> scaling the digital frontier.
                             </p>
                         </div>
                     </div>
 
-                    {/* --- RIGHT: INTELLIGENT FORM --- */}
-                    <div className="lg:col-span-8 order-1 lg:order-2">
+                    {/* --- RIGHT: HIGH TECH FORM --- */}
+                    <div className="lg:col-span-7 order-1 lg:order-2">
                         <form
                             ref={formRef}
-                            className="bg-card/30 border border-border/50 rounded-[2rem] p-6 md:p-10 relative overflow-hidden group shadow-2xl transition-all hover:bg-card/40"
+                            className="bg-card/40 backdrop-blur-2xl border border-border/60 rounded-[2.5rem] p-8 md:p-14 relative overflow-hidden group/form shadow-2xl transition-all duration-[2s] hover:bg-card/60 hover:shadow-primary/5"
                         >
-                            {/* Form Background Highlight */}
-                            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[80px] -z-10 group-hover:bg-primary/10 transition-all duration-700" />
+                            {/* Form Ambient Glare */}
+                            <div className="absolute top-[-50px] right-[-50px] w-64 h-64 bg-primary/20 blur-[100px] z-0 pointer-events-none mix-blend-screen group-hover/form:bg-primary/30 transition-colors duration-1000" />
 
-                            <div className="grid md:grid-cols-2 gap-6 md:gap-8 mb-6 md:mb-8">
-                                <InputGroup label="Full Name" placeholder="ex. Sarah Connor" type="text" />
-                                <InputGroup label="Work Email" placeholder="ex. sarah@skynet.com" type="email" />
+                            <div className="relative z-10 grid md:grid-cols-2 gap-8 md:gap-12 mb-8 md:mb-12">
+                                <FloatingInput label="SYSTEM ID (NAME)" type="text" />
+                                <FloatingInput label="ENCRYPTED EMAIL" type="email" />
                             </div>
 
-                            <div className="grid md:grid-cols-2 gap-6 md:gap-8 mb-6 md:mb-8">
-                                <InputGroup label="Company" placeholder="ex. Cyberdyne Systems" type="text" />
-                                <SelectGroup label="Inquiry Type" options={["Software Dev", "Consulting", "Cloud Ops", "Other"]} />
+                            <div className="relative z-10 grid md:grid-cols-2 gap-8 md:gap-12 mb-8 md:mb-12">
+                                <FloatingInput label="ENTERPRISE ENTITY" type="text" />
+                                <FloatingSelect label="PROTOCOL TYPE" options={["System Architecture", "Neural AI Deploy", "Cloud Migration", "General Comms"]} />
                             </div>
 
-                            <div className="mb-8">
-                                <label className="block text-xs font-mono text-muted-foreground uppercase tracking-widest mb-2">Message Context</label>
+                            <div className="relative z-10 mb-12">
+                                <label className="block text-[10px] font-mono text-muted-foreground font-bold tracking-[0.2em] uppercase mb-4 group-focus-within:text-primary transition-colors">Data Payload</label>
                                 <textarea
-                                    rows={4}
-                                    className="w-full bg-secondary/20 border-b border-border/50 focus:border-primary text-foreground text-base p-4 resize-none transition-all placeholder:text-muted-foreground/30 focus:outline-none rounded-t-lg"
-                                    placeholder="Tell us about your project goals..."
+                                    rows={5}
+                                    className="w-full bg-background/50 border border-border/40 focus:border-primary/50 text-foreground text-sm font-medium p-5 resize-none transition-all placeholder:text-muted-foreground/30 focus:outline-none rounded-xl focus:shadow-[0_0_15px_rgba(var(--primary),0.1)] focus:bg-background"
+                                    placeholder="Execute payload configuration here..."
                                 />
                             </div>
 
-                            <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-6 border-t border-border/50">
-                                <p className="text-xs text-muted-foreground max-w-xs text-center md:text-left">
-                                    By submitting, you agree to our privacy policy. We protect your data.
+                            <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-8 pt-6 border-t border-border/40">
+                                <p className="text-[10px] font-mono text-muted-foreground max-w-[200px] text-center sm:text-left opacity-70 uppercase tracking-widest">
+                                    Transmission secured via RSA-4096 handshake protocol.
                                 </p>
-                                <button type="button" className="w-full md:w-auto px-8 py-3 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full flex items-center justify-center gap-2 group/btn transition-all hover:scale-105 shadow-lg shadow-primary/20">
-                                    Initialize Request
-                                    <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                                <button type="button" className="w-full sm:w-auto px-10 h-16 bg-foreground hover:bg-primary text-background hover:text-primary-foreground font-bold text-sm tracking-widest uppercase rounded-full flex items-center justify-center gap-4 transition-all duration-300 hover:scale-[1.02] shadow-xl shadow-black/10 hover:shadow-[0_0_30px_rgba(var(--primary),0.4)] group/btn">
+                                    Transmit
+                                    <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                                 </button>
                             </div>
                         </form>
@@ -140,79 +152,62 @@ const Contact = () => {
 
 // --- SUB-COMPONENTS ---
 
-const StatusBadge = ({ label, color }: { label: string, color: string }) => (
-    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary/10 border border-border/50">
-        <span className={cn("w-1.5 h-1.5 rounded-full animate-pulse", color)} />
-        <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">{label}</span>
-    </div>
-);
-
-interface ContactTileProps {
-    icon: LucideIcon;
-    label: string;
-    value: string;
-    subValue?: string;
-    href?: string;
-}
-
-const ContactTile = ({ icon: Icon, label, value, subValue, href }: ContactTileProps) => {
+const ContactTile = ({ icon: Icon, label, value, subValue, href }: { icon: any, label: string, value: string, subValue?: string, href?: string }) => {
     const Component = href ? 'a' : 'div';
     return (
         <Component
             href={href}
-            className="group flex items-start gap-4 p-5 rounded-2xl bg-card/50 border border-border/50 hover:bg-card hover:border-primary/20 transition-all duration-300"
+            className="group flex flex-col md:flex-row items-start md:items-center gap-5 p-6 rounded-3xl bg-transparent hover:bg-card/40 border border-transparent hover:border-border/50 transition-all duration-500 cursor-pointer"
         >
-            <div className="p-3 rounded-xl bg-secondary text-muted-foreground group-hover:text-primary group-hover:bg-primary/10 transition-colors">
-                <Icon className="w-5 h-5" />
+            <div className="p-4 rounded-2xl bg-secondary/40 text-muted-foreground/60 group-hover:text-primary group-hover:bg-primary/10 transition-colors border border-border/20 group-hover:border-primary/30">
+                <Icon className="w-6 h-6 group-hover:scale-110 transition-transform duration-500" strokeWidth={1.5} />
             </div>
             <div className="flex-1 min-w-0">
-                <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider mb-1">{label}</p>
-                <h4 className="text-base font-bold text-foreground group-hover:text-primary transition-colors truncate">{value}</h4>
-                {subValue && <p className="text-xs text-muted-foreground mt-0.5 truncate">{subValue}</p>}
+                <p className="text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-[0.2em] mb-1.5">{label}</p>
+                <h4 className="text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors truncate">{value}</h4>
+                {subValue && <p className="text-sm font-medium text-muted-foreground/70 mt-1 truncate">{subValue}</p>}
             </div>
-            <div className="self-center opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 hidden sm:block">
-                <ArrowRight className="w-4 h-4 text-primary" />
+            <div className="hidden md:flex self-center w-12 h-12 rounded-full border border-border/40 items-center justify-center translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 group-hover:bg-primary group-hover:border-primary">
+                <ArrowRight className="w-5 h-5 text-primary-foreground" />
             </div>
         </Component>
     );
 };
 
-interface InputGroupProps {
-    label: string;
-    placeholder: string;
-    type: string;
-}
-
-const InputGroup = ({ label, placeholder, type }: InputGroupProps) => (
-    <div className="relative group/input">
-        <label className="block text-xs font-mono text-muted-foreground uppercase tracking-widest mb-2 group-focus-within/input:text-primary transition-colors">
-            {label}
-        </label>
+// High-end Animated Input Pattern
+const FloatingInput = ({ label, type }: { label: string, type: string }) => (
+    <div className="relative group/input flex flex-col-reverse">
         <input
             type={type}
-            className="w-full bg-transparent border-b border-border/50 py-3 text-foreground text-lg placeholder:text-muted-foreground/30 focus:outline-none focus:border-primary transition-all rounded-none"
-            placeholder={placeholder}
+            id={label}
+            className="peer w-full bg-transparent border-b-2 border-border/40 py-3 text-foreground text-lg font-medium placeholder-transparent focus:outline-none focus:border-primary transition-all duration-300"
+            placeholder={label}
         />
+        <label 
+            htmlFor={label} 
+            className="absolute left-0 text-[10px] font-mono font-bold tracking-[0.2em] uppercase text-muted-foreground peer-placeholder-shown:text-base peer-placeholder-shown:font-sans peer-placeholder-shown:font-medium peer-placeholder-shown:tracking-normal peer-placeholder-shown:top-3 peer-focus:-top-6 peer-focus:text-[10px] peer-focus:font-mono peer-focus:font-bold peer-focus:tracking-[0.2em] peer-focus:text-primary transition-all duration-300 -top-6"
+        >
+            {label}
+        </label>
     </div>
 );
 
-interface SelectGroupProps {
-    label: string;
-    options: string[];
-}
-
-const SelectGroup = ({ label, options }: SelectGroupProps) => (
-    <div className="relative">
-        <label className="block text-xs font-mono text-muted-foreground uppercase tracking-widest mb-2">
+const FloatingSelect = ({ label, options }: { label: string, options: string[] }) => (
+    <div className="relative flex flex-col-reverse">
+        <select 
+            id={label}
+            className="peer w-full bg-transparent border-b-2 border-border/40 py-3 text-foreground text-lg font-medium focus:outline-none focus:border-primary appearance-none cursor-pointer transition-colors"
+        >
+            {options.map((opt: string) => <option key={opt} className="bg-background text-foreground font-sans">{opt}</option>)}
+        </select>
+        <label 
+            htmlFor={label} 
+            className="absolute left-0 -top-6 text-[10px] font-mono font-bold tracking-[0.2em] uppercase text-muted-foreground peer-focus:text-primary transition-colors duration-300"
+        >
             {label}
         </label>
-        <div className="relative">
-            <select className="w-full bg-background border-b border-border/50 py-3 text-foreground text-lg focus:outline-none focus:border-primary appearance-none cursor-pointer rounded-none">
-                {options.map((opt: string) => <option key={opt} className="bg-background text-foreground">{opt}</option>)}
-            </select>
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground">
-                <Globe className="w-4 h-4" />
-            </div>
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground/50 peer-focus:text-primary transition-colors">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
         </div>
     </div>
 );

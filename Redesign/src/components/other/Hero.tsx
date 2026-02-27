@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { ArrowRight, Globe, Shield, Zap } from "lucide-react";
+import { ArrowRight, Play, Compass, Diamond } from "lucide-react";
 import { Button } from "../ui/button";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -12,42 +12,41 @@ const Hero = () => {
     const visualRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+        const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
         // Initial Setup
-        gsap.set(contentRef.current?.children || [], { y: 50, opacity: 0 });
-        gsap.set(visualRef.current, { x: 100, opacity: 0, scale: 0.9 });
+        gsap.set(contentRef.current?.children || [], { y: 60, opacity: 0 });
+        gsap.set(visualRef.current?.children || [], { scale: 0.8, opacity: 0, rotateY: 45 });
 
         // Animation Sequence
         tl.to(contentRef.current?.children || [], {
             y: 0,
             opacity: 1,
-            stagger: 0.1,
-            duration: 1,
+            stagger: 0.15,
+            duration: 1.4,
             delay: 0.2
         })
-        .to(visualRef.current, {
-            x: 0,
-            opacity: 1,
+        .to(visualRef.current?.children || [], {
             scale: 1,
-            duration: 1.2,
-            ease: "back.out(1.7)"
-        }, "-=0.8");
+            opacity: 1,
+            rotateY: 0,
+            duration: 1.8,
+            ease: "expo.out"
+        }, "-=1.2");
 
-        // Floating Animation for Visual
-        gsap.to(".hero-float", {
-            y: -20,
-            duration: 6,
+        // Epic slow rotation of the main orb
+        gsap.to(".luxury-orb", {
+            rotateZ: 360,
+            duration: 60,
             repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut"
+            ease: "linear"
         });
 
-        // Background Pulse
+        // Breathing effect for ambient light
         gsap.to(".hero-glow", {
-            scale: 1.2,
-            opacity: 0.4,
-            duration: 8,
+            scale: 1.1,
+            opacity: 0.5,
+            duration: 6,
             repeat: -1,
             yoyo: true,
             ease: "sine.inOut"
@@ -56,131 +55,83 @@ const Hero = () => {
     }, []);
 
     return (
-        <section ref={containerRef} className="relative min-h-screen w-full bg-background overflow-hidden flex items-center justify-center pt-20 lg:pt-0">
+        <section ref={containerRef} className="relative min-h-screen w-full bg-background overflow-hidden flex items-center justify-center pt-24 pb-12 lg:pt-0 lg:pb-0">
             
-            {/* --- BACKGROUND --- */}
+            {/* --- PREMIUM AMBIENCE --- */}
             <div className="absolute inset-0 pointer-events-none">
-                <div className="hero-glow absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] max-w-[1000px] max-h-[1000px] bg-primary/10 rounded-full blur-[100px] mix-blend-screen" />
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,oklch(var(--primary)/0.03)_1px,transparent_1px),linear-gradient(to_bottom,oklch(var(--primary)/0.03)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
+                <div className="hero-glow absolute top-[-20%] right-[-10%] w-[80vw] h-[80vw] max-w-[1200px] max-h-[1200px] bg-primary/20 rounded-full blur-[150px] mix-blend-screen mix-blend-color-dodge dark:mix-blend-screen" />
+                <div className="hero-glow absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-primary/10 rounded-full blur-[120px] mix-blend-screen mix-blend-color-dodge dark:mix-blend-screen" style={{ animationDelay: "3s" }} />
+                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
             </div>
 
-            <div className="container container-width relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+            <div className="container container-width relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center h-full">
                 
-                {/* --- LEFT CONTENT --- */}
-                <div ref={contentRef} className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-8">
+                {/* --- MASONRY LEFT CONTENT --- */}
+                <div ref={contentRef} className="lg:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left space-y-10 z-20">
                     
                     {/* Badge */}
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-xs font-mono font-medium text-primary tracking-wider uppercase">
-                        <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                        </span>
-                        Next Gen Intelligence
+                    <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 backdrop-blur-xl text-xs font-mono font-bold text-primary tracking-[0.2em] shadow-[0_0_20px_rgba(var(--primary),0.1)] uppercase">
+                        <Diamond className="w-3.5 h-3.5" />
+                        Exclusive Digital Mastery
                     </div>
 
-                    {/* Headline */}
-                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[1.1] text-balance">
-                        <span className="block text-foreground">Digital</span>
-                        <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-500 to-blue-500">Evolution</span>
+                    {/* Headline - High Contrast, Sharp */}
+                    <h1 className="text-6xl md:text-7xl lg:text-[6rem] font-sans font-black tracking-tighter leading-[0.95] text-balance">
+                        <span className="block text-foreground drop-shadow-sm">Crafting</span>
+                        <span className="block text-transparent bg-clip-text bg-gradient-to-br from-primary via-[#ffdf73] to-[#8c6b14] pb-2 drop-shadow-lg">Excellence.</span>
                     </h1>
 
-                    {/* Subheadline */}
-                    <p className="text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">
-                        We engineer high-performance digital ecosystems that scale with your ambition. Transform your data into decisive action.
+                    {/* Subheadline - Elegant */}
+                    <p className="text-xl md:text-2xl text-muted-foreground max-w-lg leading-relaxed font-light">
+                        We forge unmatched digital experiences that elevate elite brands. <strong className="font-semibold text-foreground">Precision engineered. Boldly designed.</strong>
                     </p>
 
-                    {/* Buttons */}
-                    <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto pt-4">
-                        <Button size="lg" className="h-14 px-8 rounded-full text-base gap-2 shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:-translate-y-1">
-                            Start Transformation <ArrowRight className="w-5 h-5" />
+                    {/* Elegant CTA Cluster */}
+                    <div className="flex flex-col sm:flex-row gap-5 w-full sm:w-auto pt-6">
+                        <Button size="lg" className="h-16 px-10 rounded-full text-lg font-semibold bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_0_40px_rgba(var(--primary),0.3)] hover:shadow-[0_0_60px_rgba(var(--primary),0.5)] transition-all duration-500 hover:scale-105 group border border-primary/50">
+                            Partner With Us
+                            <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-1 transition-transform" />
                         </Button>
-                        <Button variant="outline" size="lg" className="h-14 px-8 rounded-full text-base gap-2 border-primary/20 hover:bg-primary/5 transition-all duration-300 hover:-translate-y-1">
-                            Explore Solutions
+                        <Button variant="outline" size="lg" className="h-16 px-10 rounded-full text-lg font-medium border-border/50 hover:bg-secondary/30 backdrop-blur-md transition-all duration-500 hover:scale-105 group bg-background/20">
+                            <Play className="w-4 h-4 mr-3 fill-foreground group-hover:text-primary group-hover:fill-primary transition-colors" />
+                            View Showreel
                         </Button>
                     </div>
 
-                    {/* Trust Indicators */}
-                    <div className="pt-8 flex items-center gap-6 text-sm text-muted-foreground font-medium">
-                        <div className="flex items-center gap-2">
-                            <Shield className="w-4 h-4 text-primary" />
-                            <span>Enterprise Grade</span>
+                    {/* Mini Stats Footer */}
+                    <div className="pt-10 flex items-center justify-center lg:justify-start gap-10 border-t border-border/40 w-full sm:w-auto mt-6">
+                        <div className="flex flex-col">
+                            <span className="text-3xl font-black text-foreground">500+</span>
+                            <span className="text-xs uppercase tracking-widest text-muted-foreground font-mono mt-1">Clients worldwide</span>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <Zap className="w-4 h-4 text-primary" />
-                            <span>99.9% Uptime</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <Globe className="w-4 h-4 text-primary" />
-                            <span>Global Scale</span>
+                        <div className="w-px h-12 bg-border/50" />
+                        <div className="flex flex-col">
+                            <span className="text-3xl font-black text-primary">Awwwards</span>
+                            <span className="text-xs uppercase tracking-widest text-muted-foreground font-mono mt-1">Studio of the Year</span>
                         </div>
                     </div>
                 </div>
 
-                {/* --- RIGHT VISUAL --- */}
-                <div ref={visualRef} className="relative flex items-center justify-center lg:h-[800px] perspective-[2000px]">
-                    
-                    {/* 3D Floating Interface */}
-                    <div className="hero-float relative w-full max-w-lg aspect-square lg:aspect-[4/5] preserve-3d rotate-y-[-10deg] rotate-x-[5deg]">
+                {/* --- AVANT-GARDE RIGHT VISUAL --- */}
+                <div className="lg:col-span-6 relative flex items-center justify-center h-[500px] lg:h-[800px] perspective-[2000px] pointer-events-none">
+                    <div ref={visualRef} className="relative w-full aspect-square max-w-[600px] flex items-center justify-center preserve-3d">
                         
-                        {/* Back Layer - Glow */}
-                        <div className="absolute inset-4 bg-primary/20 blur-[80px] rounded-full translate-z-[-50px]" />
-
-                        {/* Main Card */}
-                        <div className="absolute inset-0 bg-card/80 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-2xl flex flex-col overflow-hidden translate-z-[0px]">
-                            {/* Card Header */}
-                            <div className="px-6 py-4 border-b border-white/5 flex items-center justify-between bg-white/5">
-                                <div className="flex gap-2">
-                                    <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                                    <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                                    <div className="w-3 h-3 rounded-full bg-green-500/80" />
-                                </div>
-                                <div className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest">System Monitor</div>
-                            </div>
+                        {/* Obsidian & Gold Abstract Structure */}
+                        
+                        {/* The Halo */}
+                        <div className="absolute inset-10 border-[1px] border-primary/30 rounded-full animate-float" style={{ animationDelay: "1s" }} />
+                        <div className="absolute inset-0 border-[2px] border-dashed border-primary/20 rounded-full luxury-orb" />
+                        
+                        {/* The Core Monolith */}
+                        <div className="absolute w-[60%] h-[80%] bg-gradient-to-tr from-foreground/10 to-foreground/5 backdrop-blur-3xl rounded-t-full rounded-b-full border border-white/10 dark:border-white/5 shadow-2xl flex items-center justify-center overflow-hidden animate-float-delayed">
                             
-                            {/* Card Body - Abstract Data */}
-                            <div className="p-6 flex-1 flex flex-col gap-6 relative">
-                                <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,rgba(0,0,0,0.5))] pointer-events-none" />
-                                
-                                <div className="space-y-2">
-                                    <div className="flex justify-between text-xs font-mono text-muted-foreground">
-                                        <span>Server Load</span>
-                                        <span className="text-primary">84%</span>
-                                    </div>
-                                    <div className="h-2 w-full bg-secondary rounded-full overflow-hidden">
-                                        <div className="h-full w-[84%] bg-gradient-to-r from-primary to-purple-500 rounded-full animate-pulse-slow" />
-                                    </div>
-                                </div>
-
-                                <div className="flex-1 rounded-xl bg-secondary/30 border border-white/5 p-4 flex items-end gap-2">
-                                    {[30, 45, 25, 60, 75, 50, 80, 55, 90, 65].map((h, i) => (
-                                        <div key={i} className="flex-1 bg-primary/40 rounded-t-sm hover:bg-primary/60 transition-colors" style={{ height: `${h}%` }} />
-                                    ))}
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="p-4 rounded-xl bg-primary/5 border border-primary/10">
-                                        <div className="text-xs text-muted-foreground mb-1">Active Users</div>
-                                        <div className="text-2xl font-bold">128k</div>
-                                    </div>
-                                    <div className="p-4 rounded-xl bg-primary/5 border border-primary/10">
-                                        <div className="text-xs text-muted-foreground mb-1">Latency</div>
-                                        <div className="text-2xl font-bold text-emerald-500">24ms</div>
-                                    </div>
-                                </div>
+                            {/* Inner Gold Inlay */}
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[90%] border border-primary/40 rounded-t-[40%] rounded-b-[40%] overflow-hidden mix-blend-overlay">
+                                 <div className="absolute inset-0 bg-gradient-to-b from-primary/30 to-transparent" />
                             </div>
-                        </div>
 
-                        {/* Floating Elements */}
-                        <div className="absolute -top-10 -right-10 p-4 bg-card/90 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl animate-float translate-z-[60px]" style={{ animationDelay: "1s" }}>
-                            <Zap className="w-8 h-8 text-yellow-400 fill-yellow-400/20" />
-                        </div>
-
-                        <div className="absolute -bottom-5 -left-5 p-5 bg-card/90 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl animate-float translate-z-[40px]" style={{ animationDelay: "2s" }}>
-                            <div className="text-xs font-mono text-muted-foreground uppercase mb-1">Status</div>
-                            <div className="flex items-center gap-2 text-sm font-bold text-emerald-500">
-                                <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-                                Operational
-                            </div>
+                            {/* Minimal Emblem */}
+                            <Compass className="w-24 h-24 text-primary opacity-80 mix-blend-screen drop-shadow-[0_0_30px_rgba(var(--primary),1)] animate-pulse-slow" strokeWidth={1} />
                         </div>
 
                     </div>

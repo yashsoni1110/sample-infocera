@@ -13,7 +13,7 @@ import {
 } from "../ui/navigation-menu";
 import { cn } from "../../lib/utils";
 import { Logo, SERVICES_DATA } from "../../lib/NavData";
-import { ModeToggle } from "../ui/mode-toggle"; // Import ModeToggle
+import { ModeToggle } from "../ui/mode-toggle";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -23,76 +23,75 @@ const Nav = () => {
   const navRef = useRef(null);
 
   useGSAP(() => {
-    // Initial materialization animation
+    // Elegant fade-in for premium look
     gsap.fromTo(navRef.current, 
-      { y: -20, opacity: 0, scale: 0.95 },
+      { y: -30, opacity: 0 },
       { 
         y: 0, 
         opacity: 1, 
-        scale: 1, 
-        duration: 1.2, 
-        ease: "power3.out", 
-        delay: 0.5 
+        duration: 1.5, 
+        ease: "power4.out", 
+        delay: 0.2 
       }
     );
   }, []);
 
   return (
     <>
-      <nav className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+      <nav className="fixed top-8 left-0 right-0 z-50 flex justify-center px-4 md:px-8 pointer-events-none">
         <div 
           ref={navRef}
-          className="pointer-events-auto bg-background/70 backdrop-blur-2xl border border-border/40 rounded-full px-6 py-3 shadow-2xl flex items-center gap-8 max-w-5xl w-full justify-between transition-all duration-300 hover:bg-background/90 hover:border-border/60 hover:shadow-primary/10"
+          className="pointer-events-auto bg-background/50 backdrop-blur-3xl border border-white/5 dark:border-white/10 rounded-2xl px-8 py-4 shadow-2xl flex items-center gap-10 max-w-7xl w-full justify-between transition-all duration-700 hover:bg-background/80 hover:border-primary/20"
         >
-            {/* LEFT: Logo - Minimal */}
-            <div className="shrink-0 scale-90">
-                <Logo />
+            {/* LEFT: Elite Monogram Logo */}
+            <div className="shrink-0 scale-90 md:scale-100 flex items-center gap-2 cursor-pointer group">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                     <span className="font-serif font-black text-foreground text-xl">I</span>
+                </div>
+                <span className="text-xl font-medium tracking-widest uppercase ml-2 select-none group-hover:text-primary transition-colors">INFOCERA</span>
             </div>
 
-            {/* CENTER: Compact Desktop Nav */}
-            <div className="hidden lg:flex items-center gap-1">
+            {/* CENTER: Ultra-sleek Desktop Nav */}
+            <div className="hidden lg:flex items-center gap-2 font-mono uppercase tracking-widest text-xs">
                 <NavigationMenu>
                     <NavigationMenuList>
                         <NavigationMenuItem>
-                            <NavigationMenuLink href="/" className={cn(navigationMenuTriggerStyle(), "bg-transparent hover:bg-secondary/20 text-foreground/80 hover:text-foreground rounded-full data-[active]:bg-secondary/20")}>
-                                Home
+                            <NavigationMenuLink href="/" className={cn(navigationMenuTriggerStyle(), "bg-transparent font-medium hover:bg-white/5 text-foreground/60 hover:text-foreground rounded-lg data-[active]:text-primary")}>
+                                Overview
                             </NavigationMenuLink>
                         </NavigationMenuItem>
                         <NavigationMenuItem>
-                             <NavigationMenuTrigger className="bg-transparent hover:bg-secondary/20 text-foreground/80 hover:text-foreground rounded-full data-[active]:bg-secondary/20">
-                                Solutions
+                             <NavigationMenuTrigger className="bg-transparent font-medium hover:bg-white/5 text-foreground/60 hover:text-foreground rounded-lg data-[state=open]:text-primary">
+                                Capability
                              </NavigationMenuTrigger>
                              <NavigationMenuContent>
-                                <div className="w-[600px] p-0 bg-popover/95 backdrop-blur-3xl border border-border/40 rounded-2xl overflow-hidden shadow-2xl">
-                                    <div className="grid grid-cols-[1fr_1.5fr] p-2 gap-2 h-[320px]">
+                                <div className="w-[600px] p-0 bg-popover/95 backdrop-blur-3xl border border-white/10 rounded-xl overflow-hidden shadow-2xl">
+                                    <div className="grid grid-cols-[1fr_1.5fr] p-2 gap-2 h-[340px]">
                                         
                                         {/* LEFT: Categories */}
-                                        <div className="flex flex-col gap-2 p-2">
-                                            <h4 className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-wider mb-2 px-2">Capabilities</h4>
+                                        <div className="flex flex-col gap-2 p-3 bg-secondary/20 rounded-lg">
+                                            <h4 className="text-[10px] text-primary mb-3 px-2 tracking-[0.3em]">SERVICES</h4>
                                             {SERVICES_DATA.slice(0, 3).map((s, i) => (
                                                 <div 
                                                     key={i} 
                                                     onMouseEnter={() => setActiveCategory(s)}
                                                     className={cn(
-                                                        "group flex items-start gap-3 p-3 rounded-xl transition-all cursor-pointer",
-                                                        activeCategory.category === s.category ? "bg-secondary/50" : "hover:bg-secondary/20"
+                                                        "group flex items-start gap-4 p-3 rounded-lg transition-all cursor-pointer border border-transparent",
+                                                        activeCategory.category === s.category ? "bg-card border-white/5 shadow-md" : "hover:bg-white/5"
                                                     )}
                                                 >
                                                     <div className={cn(
-                                                        "mt-1 transition-transform duration-300",
+                                                        "mt-1 transition-transform duration-500",
                                                         activeCategory.category === s.category ? "text-primary scale-110" : "text-muted-foreground group-hover:text-primary group-hover:scale-110"
                                                     )}>
                                                         {s.icon}
                                                     </div>
                                                     <div>
                                                         <div className={cn(
-                                                            "font-medium transition-colors",
+                                                            "font-bold transition-colors tracking-widest text-[11px]",
                                                             activeCategory.category === s.category ? "text-foreground" : "text-foreground/70 group-hover:text-foreground"
                                                         )}>
                                                             {s.category}
-                                                        </div>
-                                                        <div className="text-xs text-muted-foreground line-clamp-1 opacity-70">
-                                                            Everything needed for {s.category.split(' ')[0]}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -100,31 +99,32 @@ const Nav = () => {
                                         </div>
 
                                         {/* RIGHT: Dynamic Service List */}
-                                        <div className="relative bg-secondary/10 rounded-xl border border-white/5 p-6 overflow-hidden flex flex-col group">
-                                            {/* Dynamic Background Gradient */}
-                                            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                        <div className="relative p-6 flex flex-col group">
                                             
-                                            <div className="relative z-10 flex items-center justify-between mb-4 border-b border-border/10 pb-4">
-                                                <h4 className="text-lg font-bold text-foreground">{activeCategory.category}</h4>
-                                                <ArrowUpRight className="w-4 h-4 text-primary opacity-50" />
+                                            <div className="relative z-10 flex items-center justify-between mb-6 pb-4 border-b border-white/5">
+                                                <h4 className="text-base font-black text-foreground tracking-widest">{activeCategory.category}</h4>
                                             </div>
                                             
-                                            <div className="relative z-10 grid grid-cols-2 gap-3 overflow-y-auto pr-2 custom-scrollbar">
+                                            <div className="relative z-10 grid grid-cols-1 gap-1 overflow-y-auto custom-scrollbar">
                                                 {activeCategory.items.map((item, idx) => (
-                                                    <a key={idx} href={item.href} className="flex items-center gap-2 p-2 rounded-lg hover:bg-white/5 transition-colors group/item">
-                                                        <div className="text-muted-foreground group-hover/item:text-primary transition-colors">
-                                                            {item.icon}
+                                                    <a key={idx} href={item.href} className="flex items-center justify-between p-3 rounded-md hover:bg-secondary/30 transition-colors group/item">
+                                                        <div className="flex items-center gap-4">
+                                                            <div className="text-muted-foreground group-hover/item:text-primary transition-colors scale-90">
+                                                                {item.icon}
+                                                            </div>
+                                                            <span className="text-xs text-foreground/80 font-medium group-hover/item:text-foreground transition-colors tracking-wide">
+                                                                {item.name}
+                                                            </span>
                                                         </div>
-                                                        <span className="text-sm text-foreground/70 group-hover/item:text-foreground transition-colors line-clamp-1">
-                                                            {item.name}
-                                                        </span>
+                                                        <ArrowUpRight className="w-3 h-3 text-muted-foreground opacity-0 group-hover/item:opacity-100 transition-opacity" />
                                                     </a>
                                                 ))}
                                             </div>
 
-                                            <div className="mt-auto pt-4 relative z-10">
-                                                 <a href="#" className="flex items-center gap-2 text-primary font-bold text-xs uppercase hover:gap-3 transition-all">
-                                                    View All {activeCategory.category} <ArrowUpRight className="w-3 h-3" />
+                                            <div className="mt-auto pt-6 relative z-10 border-t border-white/5">
+                                                 <a href="#" className="flex items-center justify-between w-full text-primary font-bold text-[10px] tracking-[0.2em] hover:text-foreground transition-colors group/link">
+                                                    EXPLORE ALL
+                                                    <ArrowUpRight className="w-3 h-3 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
                                                 </a>
                                             </div>
                                         </div>
@@ -133,12 +133,12 @@ const Nav = () => {
                              </NavigationMenuContent>
                         </NavigationMenuItem>
                          <NavigationMenuItem>
-                            <NavigationMenuLink href="/portfolio" className={cn(navigationMenuTriggerStyle(), "bg-transparent hover:bg-secondary/20 text-foreground/80 hover:text-foreground rounded-full")}>
-                                Work
+                            <NavigationMenuLink href="/portfolio" className={cn(navigationMenuTriggerStyle(), "bg-transparent font-medium hover:bg-white/5 text-foreground/60 hover:text-foreground rounded-lg")}>
+                                Showcase
                             </NavigationMenuLink>
                         </NavigationMenuItem>
                          <NavigationMenuItem>
-                            <NavigationMenuLink href="/about" className={cn(navigationMenuTriggerStyle(), "bg-transparent hover:bg-secondary/20 text-foreground/80 hover:text-foreground rounded-full")}>
+                            <NavigationMenuLink href="/about" className={cn(navigationMenuTriggerStyle(), "bg-transparent font-medium hover:bg-white/5 text-foreground/60 hover:text-foreground rounded-lg")}>
                                 Studio
                             </NavigationMenuLink>
                         </NavigationMenuItem>
@@ -146,53 +146,50 @@ const Nav = () => {
                 </NavigationMenu>
             </div>
 
-            {/* RIGHT: Actions */}
-            <div className="flex items-center gap-2">
+            {/* RIGHT: Minimal Actions */}
+            <div className="flex items-center gap-4">
                  
-                 {/* Theme Toggle */}
                  <ModeToggle />
 
-                 {/* Search Trigger */}
-                 <Button variant="ghost" size="icon" className="rounded-full text-foreground/70 hover:text-foreground hover:bg-secondary/20 w-9 h-9">
+                 <Button variant="ghost" size="icon" className="hidden md:flex rounded-full text-foreground/60 hover:text-foreground hover:bg-secondary/50 w-10 h-10 border border-transparent hover:border-white/10 transition-colors">
                     <Search className="w-4 h-4" />
                  </Button>
 
-                 {/* Get Started Button - Glowing */}
-                 <Button className="hidden md:flex rounded-full px-6 bg-primary text-primary-foreground font-semibold hover:bg-primary/90 shadow-[0_0_20px_rgba(var(--primary),0.4)] hover:shadow-[0_0_30px_rgba(var(--primary),0.6)] transition-all duration-300">
-                    Get Started
+                 <Button className="hidden md:flex rounded-lg px-8 py-5 bg-foreground text-background font-bold text-xs uppercase tracking-[0.2em] hover:bg-primary hover:text-primary-foreground shadow-2xl transition-all duration-500">
+                    Initiate
                  </Button>
 
                  {/* Mobile Menu */}
                  <Sheet open={isOpen} onOpenChange={setIsOpen}>
                     <SheetTrigger asChild>
-                         <Button variant="ghost" size="icon" className="lg:hidden rounded-full text-foreground hover:bg-secondary/20">
+                         <Button variant="ghost" size="icon" className="lg:hidden rounded-lg border border-white/10 text-foreground hover:bg-secondary/20">
                             <Menu className="w-5 h-5" />
                          </Button>
                     </SheetTrigger>
-                    <SheetContent side="top" className="w-full h-screen bg-background/95 backdrop-blur-3xl border-none p-0">
-                         <div className="container mx-auto h-full flex flex-col justify-center items-center gap-8 relative">
-                             <Button onClick={() => setIsOpen(false)} variant="ghost" size="icon" className="absolute top-6 right-6 rounded-full text-muted-foreground hover:text-foreground hover:bg-secondary/20">
+                    <SheetContent side="top" className="w-full h-[80vh] bg-background/98 backdrop-blur-3xl border-b border-white/10 p-0 rounded-b-3xl">
+                         <div className="container mx-auto h-full flex flex-col justify-center items-center gap-10 relative">
+                             <Button onClick={() => setIsOpen(false)} variant="ghost" size="icon" className="absolute top-8 right-8 rounded-full border border-white/10 text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-colors">
                                 <X className="w-6 h-6" />
                              </Button>
                              
-                             {/* Mobile Links */}
-                             <div className="flex flex-col items-center gap-6">
-                                {["Home", "Solutions", "Work", "Studio", "Contact"].map((item) => (
+                             <div className="flex flex-col items-center gap-8 w-full">
+                                {["Overview", "Capability", "Showcase", "Studio", "Contact"].map((item, i) => (
                                     <a 
                                         key={item} 
                                         href="#" 
-                                        className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-foreground to-foreground/40 hover:to-primary transition-all duration-300"
+                                        className="group w-full max-w-sm flex items-center justify-between text-3xl font-black text-foreground/50 hover:text-foreground transition-all duration-500 border-b border-white/5 pb-4"
                                         onClick={() => setIsOpen(false)}
                                     >
-                                        {item}
+                                        <span className="tracking-tight">{item}</span>
+                                        <span className="font-mono text-sm tracking-widest text-primary opacity-0 group-hover:opacity-100 transition-opacity">0{i+1}</span>
                                     </a>
                                 ))}
                              </div>
 
-                             <div className="absolute bottom-10 flex gap-6 text-muted-foreground">
-                                <a href="#" className="hover:text-primary transition-colors">LinkedIn</a>
-                                <a href="#" className="hover:text-primary transition-colors">Twitter/X</a>
-                                <a href="#" className="hover:text-primary transition-colors">Instagram</a>
+                             <div className="absolute bottom-10 flex gap-10 text-xs font-mono tracking-widest uppercase text-muted-foreground">
+                                <a href="#" className="hover:text-primary transition-colors">IN</a>
+                                <a href="#" className="hover:text-primary transition-colors">X</a>
+                                <a href="#" className="hover:text-primary transition-colors">IG</a>
                              </div>
                          </div>
                     </SheetContent>
@@ -200,7 +197,6 @@ const Nav = () => {
             </div>
         </div>
       </nav>
-      {/* Spacer is removed because Nav is floating and effectively translucent overlay */}
     </>
   );
 };
