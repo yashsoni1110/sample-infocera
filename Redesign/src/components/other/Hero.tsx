@@ -55,7 +55,7 @@ const Hero = () => {
     }, []);
 
     return (
-        <section ref={containerRef} className="relative min-h-screen w-full bg-background overflow-hidden flex items-center justify-center pt-24 pb-12 lg:pt-0 lg:pb-0">
+        <section ref={containerRef} className="relative min-h-[100dvh] w-full bg-background overflow-hidden flex items-center justify-center pt-40 pb-20 lg:pt-48 lg:pb-24">
             
             {/* --- PREMIUM AMBIENCE --- */}
             <div className="absolute inset-0 pointer-events-none">
